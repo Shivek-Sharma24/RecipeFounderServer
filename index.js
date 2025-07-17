@@ -7,7 +7,7 @@ const cors = require("cors");
 // app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://recipe-founder-ten.vercel.app",
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
   })
