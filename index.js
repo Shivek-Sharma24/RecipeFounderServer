@@ -1,23 +1,25 @@
 const express = require("express");
-const app = express();
 const router = require("./routes/app");
-const port = 9000;
-app.use(express.json());
 const cors = require("cors");
-// app.use(cors());
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const port = 9000;
+
+dotenv.config();
+
+const app = express();
+
 app.use(
   cors({
     origin: "https://recipe-founder-ten.vercel.app",
-    credentials: true,
+    methods: "GET,POST,PUT,DELETE",
     allowedHeaders: ["Authorization", "Content-Type"],
   })
 );
-app.listen(port, () => {
-  console.log("server running on ", `http://localhost:${port}`);
-});
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+
 app.use("/", router);
 
 mongoose
@@ -27,3 +29,11 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
+
+app.listen(port, () => {
+  console.log("server running on ", `http://localhost:${port}`);
+});
+
+
+
+
